@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Tenant Application Form | Haven Rentals USA</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Signature Pad Library -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <!-- html2pdf Library for PDF Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+        }
+
+        .glass-card {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .step-active {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            background: rgba(245, 158, 11, 0.1);
+        }
+
+        .step-complete {
+            background: #f59e0b;
+            color: #000;
+        }
+
+        #signature-pad {
+            border: 2px dashed #cbd5e1;
+            border-radius: 0.5rem;
+            cursor: crosshair;
+            background-color: #ffffff;
+            width: 100%;
+            height: 180px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+
+        /* HYPER-REALISTIC US OFFICIAL LEGAL PDF STYLING */
+        .pdf-render {
+            color: #0f172a !important;
+            background-color: #ffffff !important;
+            padding: 35px !important;
+            font-family: 'Times New Roman', Times, serif !important;
+            box-sizing: border-box !important;
+        }
+        .pdf-official-border {
+            border: 3px double #0f172a;
+            padding: 20px;
+            position: relative;
+        }
+        .pdf-header-title {
+            text-align: center;
+            border-bottom: 2px solid #0f172a;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .pdf-header-title h1 {
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0;
+            color: #0f172a;
+        }
+        .pdf-header-title p {
+            font-size: 10px;
+            margin: 3px 0 0 0;
+            color: #475569;
+            font-style: italic;
+        }
+        .pdf-watermark-stamp {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 2px solid #b45309;
+            color: #b45309;
+            padding: 4px 8px;
+            font-size: 9px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transform: rotate(-3deg);
+            opacity: 0.85;
+        }
+        .pdf-section-title {
+            background-color: #f1f5f9;
+            border-left: 4px solid #0f172a;
+            padding: 4px 8px;
+            font-weight: bold;
+            font-size: 11px;
+            margin-top: 12px;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #0f172a;
+        }
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 12px;
+            font-size: 10.5px;
+            line-height: 1.3;
+        }
+        .pdf-field-box {
+            border-bottom: 1px dotted #94a3b8;
+            padding-bottom: 2px;
+        }
+        .pdf-label {
+            font-weight: bold;
+            color: #334155;
+            text-transform: uppercase;
+            font-size: 9px;
+        }
+        .pdf-value {
+            color: #0f172a;
+            font-weight: 500;
+        }
+        .pdf-legal-text {
+            font-size: 8.5px;
+            color: #475569;
+            text-align: justify;
+            margin-top: 12px;
+            line-height: 1.25;
+            border-top: 1px solid #cbd5e1;
+            padding-top: 8px;
+        }
+        .pdf-signature-block {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid #0f172a;
+            padding-top: 8px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12 flex flex-col justify-between">
+
+    <!-- Header Section -->
+    <header class="relative bg-slate-900 border-b border-slate-800 py-6 mb-8">
+        <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl gold-gradient flex items-center justify-center text-slate-950 font-bold text-2xl shadow-lg shadow-amber-500/20">
+                    <i class="fa-solid fa-house-chimney"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-white tracking-wide">HAVEN RENTALS USA</h1>
+                    <p class="text-xs text-amber-500 font-medium tracking-wider uppercase">Premium Property Management</p>
+                </div>
+            </div>
+            <div class="bg-slate-800/80 px-4 py-2 rounded-full border border-slate-700 text-xs text-slate-300 flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                Official Government-Compliant Application
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 w-full flex-grow">
+        <div class="glass-card rounded-2xl p-6 md:p-10 shadow-2xl relative overflow-hidden">
+            
+            <div class="text-center mb-8">
+                <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">TENANT APPLICATION FORM</h2>
+                <p class="text-slate-400 text-sm">Please fill in all details carefully. Fields marked with <span class="text-amber-500">*</span> are required.</p>
+            </div>
+
+            <!-- Progress Header -->
+            <div class="mb-10">
+                <div class="flex justify-between items-center mb-4 overflow-x-auto pb-2 text-xs md:text-sm gap-2">
+                    <div id="step-indicator-1" class="step-badge step-active px-3 py-1.5 rounded-lg border font-semibold flex items-center gap-2 whitespace-nowrap"><span>1</span> Personal</div>
+                    <div id="step-indicator-2" class="step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"><span>2</span> Rental</div>
+                    <div id="step-indicator-3" class="step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"><span>3</span> Employment</div>
+                    <div id="step-indicator-4" class="step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"><span>4</span> Occupants</div>
+                    <div id="step-indicator-5" class="step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"><span>5</span> Credit Check</div>
+                    <div id="step-indicator-6" class="step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"><span>6</span> Payment</div>
+                    <div id="step-indicator-7" class="step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"><span>7</span> Sign</div>
+                </div>
+                <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="gold-gradient h-full w-[14.28%] transition-all duration-300 ease-in-out"></div>
+                </div>
+            </div>
+
+            <!-- Form Container connected directly to Formspree -->
+            <form id="tenant-application-form" action="https://formspree.io/f/mzeeoodj" method="POST">
+                
+                <!-- Hidden inputs to carry all javascript-gathered text values -->
+                <input type="hidden" name="Full_Name" id="h-fullName">
+                <input type="hidden" name="Date_of_Birth" id="h-dob">
+                <input type="hidden" name="Phone_Number" id="h-phone">
+                <input type="hidden" name="Email_Address" id="h-email">
+                <input type="hidden" name="Move_In_Date" id="h-moveInDate">
+                <input type="hidden" name="Current_Address" id="h-currentAddress">
+                <input type="hidden" name="Landlord_Name" id="h-landlordName">
+                <input type="hidden" name="Landlord_Phone" id="h-landlordPhone">
+                <input type="hidden" name="Monthly_Rent" id="h-monthlyRent">
+                <input type="hidden" name="Reason_For_Moving" id="h-reasonForMoving">
+                <input type="hidden" name="Employer" id="h-employer">
+                <input type="hidden" name="Job_Title" id="h-jobTitle">
+                <input type="hidden" name="Monthly_Income" id="h-monthlyIncome">
+                <input type="hidden" name="Supervisor_Contact" id="h-supervisorContact">
+                <input type="hidden" name="Total_Occupants" id="h-totalOccupants">
+                <input type="hidden" name="Additional_Occupants" id="h-additionalOccupants">
+                <input type="hidden" name="Pets_Info" id="h-petsInfo">
+                <input type="hidden" name="Current_Credit_Score" id="h-creditScore">
+                <input type="hidden" name="Payment_Method" id="h-paymentMethod">
+                <input type="hidden" name="Transaction_ID" id="h-transactionId">
+                <input type="hidden" name="Digital_Signature" id="h-signatureData">
+
+                <!-- STEP 1: Personal Details -->
+                <div id="step-1" class="form-step space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-user"></i> Step 1: Personal Details
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Full Name <span class="text-amber-500">*</span></label>
+                            <input type="text" id="fullName" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="John Doe">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Date of Birth <span class="text-amber-500">*</span></label>
+                            <input type="date" id="dob" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Phone Number <span class="text-amber-500">*</span></label>
+                            <input type="tel" id="phone" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="(555) 000-0000">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Email Address <span class="text-amber-500">*</span></label>
+                            <input type="email" id="email" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="john@example.com">
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Desired Move-in Date <span class="text-amber-500">*</span></label>
+                            <input type="date" id="moveInDate" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 2: Rental History -->
+                <div id="step-2" class="form-step hidden space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-location-dot"></i> Step 2: Rental History
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Current Street Address <span class="text-amber-500">*</span></label>
+                            <input type="text" id="currentAddress" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="123 Main Street, Apt 4B">
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Current Landlord Name</label>
+                                <input type="text" id="landlordName" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Jane Smith">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Landlord Phone / Contact</label>
+                                <input type="tel" id="landlordPhone" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="(555) 111-2222">
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Monthly Rent ($)</label>
+                                <input type="number" id="monthlyRent" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="1200">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-300 mb-1">Reason for Moving</label>
+                                <input type="text" id="reasonForMoving" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Relocating for work">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: Employment -->
+                <div id="step-3" class="form-step hidden space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-briefcase"></i> Step 3: Employment & Income
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Employer / Company Name <span class="text-amber-500">*</span></label>
+                            <input type="text" id="employer" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Acme Corp">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Job Title / Position <span class="text-amber-500">*</span></label>
+                            <input type="text" id="jobTitle" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Software Engineer">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Gross Monthly Income ($) <span class="text-amber-500">*</span></label>
+                            <input type="number" id="monthlyIncome" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="4500">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Supervisor Name & Phone</label>
+                            <input type="text" id="supervisorContact" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Manager Name - (555) 333-4444">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 4: Occupants & Pets -->
+                <div id="step-4" class="form-step hidden space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i> Step 4: Occupants & Pets
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Total Number of Occupants <span class="text-amber-500">*</span></label>
+                            <select id="totalOccupants" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition">
+                                <option value="1 Person (Just Me)">1 Person (Just Me)</option>
+                                <option value="2 Persons">2 Persons</option>
+                                <option value="3 Persons">3 Persons</option>
+                                <option value="4 Persons">4 Persons</option>
+                                <option value="5 Persons">5 Persons</option>
+                                <option value="6+ Persons">6+ Persons</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Additional Occupants Details (Names & Ages)</label>
+                            <textarea id="additionalOccupants" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Jane Doe (Spouse, 30), Timmy Doe (Child, 5)"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 mb-1">Pets Information (Breed, Weight, Age)</label>
+                            <textarea id="petsInfo" rows="2" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Golden Retriever, 45 lbs, 3 years old"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 5: Credit & Background Check (Updated with Credit Score Input) -->
+                <div id="step-5" class="form-step hidden space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-halved"></i> Step 5: Credit & Background Verification
+                    </h3>
+                    
+                    <div class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl space-y-3">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-exclamation text-amber-400 text-xl mt-0.5"></i>
+                            <div>
+                                <h4 class="font-bold text-amber-400 text-sm mb-1">Official Credit Check Required</h4>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    All applicants must submit an official credit report verification. Please click the button below to complete your official credit check:
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-2">
+                            <a href="https://afflat3b2.com/trk/lnk/8891C253-ACB3-4716-8A39-7318DAC08EBB/?o=32670&c=918277&a=743959&k=5D774E3B48750F88E199847D4D0E67EA&l=38512&s1=TRS_R15" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold px-6 py-2.5 rounded-lg text-sm transition shadow-md">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Perform Official Credit Check
+                            </a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Current Credit Score (e.g., 720) <span class="text-amber-500">*</span></label>
+                        <input type="number" id="creditScore" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Enter your current credit score number (300 - 850)">
+                        <p class="text-[11px] text-slate-400 mt-1">Please enter your verified running credit score value.</p>
+                    </div>
+
+                    <div class="bg-slate-900/80 border border-slate-700 p-4 rounded-xl">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-headset text-slate-400 text-lg mt-0.5"></i>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                <strong>Need Assistance?</strong> If you experience any technical difficulties or issues completing your credit check, please contact your designated rental representative immediately before proceeding.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 6: Payment -->
+                <div id="step-6" class="form-step hidden space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-wallet"></i> Step 6: Application Fee & Security Deposit
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-2">
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 font-medium">Application Fee</span>
+                            <h4 class="text-2xl font-extrabold text-amber-400">$100.00 <span class="text-xs font-normal text-slate-400">USD</span></h4>
+                        </div>
+                        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800">
+                            <span class="text-xs text-slate-400 font-medium">Refundable Security Deposit</span>
+                            <h4 class="text-2xl font-extrabold text-emerald-400">$300.00 <span class="text-xs font-normal text-slate-400">USD</span></h4>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-slate-300">
+                        Please select your preferred digital payment method to complete the mandatory initial filing fees:
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        <!-- CHIME PRIMARY -->
+                        <div onclick="selectPayment('Chime')" id="pay-Chime" class="payment-card cursor-pointer bg-slate-900/90 border-2 border-amber-500 rounded-xl p-4 flex flex-col justify-between hover:border-amber-400 transition relative overflow-hidden shadow-lg shadow-amber-500/10">
+                            <span class="absolute top-0 right-0 bg-amber-500 text-slate-950 font-extrabold text-[10px] px-2 py-0.5 rounded-bl-lg uppercase">PRIMARY</span>
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-building-columns"></i></div>
+                                <div>
+                                    <h4 class="font-bold text-white text-base">Chime</h4>
+                                    <p class="text-xs text-amber-400 font-medium">Recommended</p>
+                                </div>
+                            </div>
+                            <p class="text-xs text-slate-400">Instant Direct Transfer</p>
+                        </div>
+
+                        <!-- CASH APP -->
+                        <div onclick="selectPayment('Cash App')" id="pay-CashApp" class="payment-card cursor-pointer bg-slate-900 border border-slate-700 rounded-xl p-4 flex flex-col justify-between hover:border-amber-500 transition">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-green-500/20 text-green-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-dollar-sign"></i></div>
+                                <div><h4 class="font-bold text-white text-base">Cash App</h4><p class="text-xs text-slate-400">Fast Mobile Pay</p></div>
+                            </div>
+                            <p class="text-xs text-slate-400">Pay via $Cashtag</p>
+                        </div>
+
+                        <!-- VENMO -->
+                        <div onclick="selectPayment('Venmo')" id="pay-Venmo" class="payment-card cursor-pointer bg-slate-900 border border-slate-700 rounded-xl p-4 flex flex-col justify-between hover:border-amber-500 transition">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-sky-500/20 text-sky-400 flex items-center justify-center font-bold text-lg"><i class="fa-solid fa-v"></i></div>
+                                <div><h4 class="font-bold text-white text-base">Venmo</h4><p class="text-xs text-slate-400">Social Payment</p></div>
+                            </div>
+                            <p class="text-xs text-slate-400">Pay via @Username</p>
+                        </div>
+
+                        <!-- BITCOIN -->
+                        <div onclick="selectPayment('Bitcoin')" id="pay-Bitcoin" class="payment-card cursor-pointer bg-slate-900 border border-slate-700 rounded-xl p-4 flex flex-col justify-between hover:border-amber-500 transition">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold text-lg"><i class="fa-brands fa-bitcoin"></i></div>
+                                <div><h4 class="font-bold text-white text-base">Bitcoin</h4><p class="text-xs text-slate-400">Crypto Transfer</p></div>
+                            </div>
+                            <p class="text-xs text-slate-400">BTC Wallet Address</p>
+                        </div>
+
+                        <!-- APPLE PAY -->
+                        <div onclick="selectPayment('Apple Pay')" id="pay-ApplePay" class="payment-card cursor-pointer bg-slate-900 border border-slate-700 rounded-xl p-4 flex flex-col justify-between hover:border-amber-500 transition">
+                            <div class="flex items-center gap-3 mb-2">
+                                <div class="w-10 h-10 rounded-lg bg-slate-700 text-white flex items-center justify-center font-bold text-lg"><i class="fa-brands fa-apple"></i></div>
+                                <div><h4 class="font-bold text-white text-base">Apple Pay</h4><p class="text-xs text-slate-400">Seamless iOS Pay</p></div>
+                            </div>
+                            <p class="text-xs text-slate-400">Direct Contact Transfer</p>
+                        </div>
+                    </div>
+
+                    <div id="payment-details-box" class="bg-amber-500/10 border border-amber-500/30 p-4 rounded-xl mt-4">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-circle-info text-amber-400 text-lg mt-0.5"></i>
+                            <div>
+                                <h5 class="text-sm font-bold text-amber-400 mb-1">Payment Instructions:</h5>
+                                <p class="text-xs text-slate-300 leading-relaxed">
+                                    Please contact your authorized rental agent to obtain their official payment handle (Chime Tag, Cashtag, Venmo Handle, or BTC Wallet Address). Send the transaction and enter your confirmation reference below.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">Transaction ID / Reference Number <span class="text-amber-500">*</span></label>
+                        <input type="text" id="transactionId" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-slate-200 focus:outline-none focus:border-amber-500 transition" placeholder="Enter transaction confirmation code or sender tag">
+                    </div>
+                </div>
+
+                <!-- STEP 7: Sign -->
+                <div id="step-7" class="form-step hidden space-y-6">
+                    <h3 class="text-lg font-bold text-amber-500 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-file-signature"></i> Step 7: Authorization & Signature
+                    </h3>
+                    
+                    <div class="bg-slate-900/60 p-4 rounded-xl border border-slate-800 text-xs text-slate-400 space-y-2 leading-relaxed max-h-40 overflow-y-auto">
+                        <p class="font-semibold text-slate-300">Government Law Rental Compliance & Truth-in-Renting Declaration:</p>
+                        <p>I hereby certify that all information provided in this official application is true, accurate, and complete to the best of my knowledge. I understand that providing false or misleading statements may constitute grounds for immediate rejection of this application, forfeiture of all application fees and deposits, and immediate termination of any resulting lease agreement.</p>
+                        <p>By signing below, I authorize Haven Rentals USA and its authorized agents to verify all information provided herein through credit reporting agencies, employment verification, criminal background investigations, and references supplied.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 mb-2">Digital Signature <span class="text-amber-500">*</span></label>
+                        <div class="relative">
+                            <canvas id="signature-pad"></canvas>
+                            <button type="button" onclick="clearSignature()" class="absolute bottom-3 right-3 bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1 rounded text-xs border border-slate-700 transition">
+                                <i class="fa-solid fa-rotate-right mr-1"></i> Clear
+                            </button>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-1">Please sign clearly inside the white box using your mouse or touchscreen.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-3 pt-4">
+                        <button type="submit" id="submit-btn" class="flex-1 gold-gradient hover:opacity-95 text-slate-950 font-extrabold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+                            <i class="fa-solid fa-paper-plane"></i> Submit Application
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons (for steps 1 to 6) -->
+                <div id="form-navigation-footer" class="flex justify-between items-center mt-8 pt-4 border-t border-slate-800">
+                    <button type="button" id="prev-btn" onclick="prevStep()" class="hidden bg-slate-800 hover:bg-slate-700 text-slate-200 px-5 py-2.5 rounded-lg text-sm font-semibold transition flex items-center gap-2">
+                        <i class="fa-solid fa-arrow-left"></i> Previous
+                    </button>
+                    <div class="ml-auto">
+                        <button type="button" id="next-btn" onclick="nextStep()" class="gold-gradient hover:opacity-95 text-slate-950 px-6 py-2.5 rounded-lg text-sm font-extrabold transition flex items-center gap-2 shadow-md">
+                            Next <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Success & Post-Submission Modal / View (Hidden by Default) -->
+            <div id="success-view" class="hidden text-center py-10 space-y-6">
+                <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-4xl shadow-lg">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <div class="space-y-2">
+                    <h3 class="text-2xl font-extrabold text-white">Application Submitted Successfully!</h3>
+                    <p class="text-slate-300 text-sm max-w-md mx-auto">Your official rental application has been successfully transmitted to Haven Rentals USA management. You can now download your official verified record as a PDF.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                    <button type="button" onclick="downloadUSDSrealPDF()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 shadow-lg">
+                        <i class="fa-solid fa-file-pdf"></i> Download Official Application PDF
+                    </button>
+                    <button type="button" onclick="location.reload()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold py-3 px-6 rounded-xl transition flex items-center justify-center gap-2 border border-slate-700">
+                        <i class="fa-solid fa-house"></i> Return to Home
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Hidden Printable Official US Legal Tenant Application Document Template for 100% Real PDF Generation -->
+    <div id="pdf-template-container" style="display: none;">
+        <div id="printable-pdf-content" class="pdf-render">
+            <div class="pdf-official-border">
+                <div class="pdf-watermark-stamp">OFFICIAL VERIFIED RECORD</div>
+                
+                <div class="pdf-header-title">
+                    <h1>HAVEN RENTALS USA</h1>
+                    <p>Official Residential Tenancy Application & Background Verification Record</p>
+                    <p style="font-size: 8px; margin-top: 2px;">Compliant with US Fair Housing & State Property Management Laws</p>
+                </div>
+
+                <div class="pdf-section-title">1. Personal Identification & Contact Details</div>
+                <div class="pdf-grid">
+                    <div class="pdf-field-box"><span class="pdf-label">Full Legal Name:</span> <br><span id="pdf-val-fullName" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Date of Birth:</span> <br><span id="pdf-val-dob" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Phone Number:</span> <br><span id="pdf-val-phone" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Email Address:</span> <br><span id="pdf-val-email" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box" style="grid-column: span 2;"><span class="pdf-label">Desired Move-In Date:</span> <br><span id="pdf-val-moveInDate" class="pdf-value">-</span></div>
+                </div>
+
+                <div class="pdf-section-title">2. Tenancy & Residential History</div>
+                <div class="pdf-grid">
+                    <div class="pdf-field-box" style="grid-column: span 2;"><span class="pdf-label">Current Address:</span> <br><span id="pdf-val-currentAddress" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Landlord Name:</span> <br><span id="pdf-val-landlordName" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Landlord Phone:</span> <br><span id="pdf-val-landlordPhone" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Monthly Rent Paid:</span> <br><span id="pdf-val-monthlyRent" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Reason for Moving:</span> <br><span id="pdf-val-reasonForMoving" class="pdf-value">-</span></div>
+                </div>
+
+                <div class="pdf-section-title">3. Employment & Income Verification</div>
+                <div class="pdf-grid">
+                    <div class="pdf-field-box"><span class="pdf-label">Employer Name:</span> <br><span id="pdf-val-employer" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Job Title / Position:</span> <br><span id="pdf-val-jobTitle" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Gross Monthly Income:</span> <br><span id="pdf-val-monthlyIncome" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Supervisor Reference:</span> <br><span id="pdf-val-supervisorContact" class="pdf-value">-</span></div>
+                </div>
+
+                <div class="pdf-section-title">4. Household Occupants & Pets</div>
+                <div class="pdf-grid">
+                    <div class="pdf-field-box"><span class="pdf-label">Total Occupants:</span> <br><span id="pdf-val-totalOccupants" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Pets Information:</span> <br><span id="pdf-val-petsInfo" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box" style="grid-column: span 2;"><span class="pdf-label">Additional Occupants:</span> <br><span id="pdf-val-additionalOccupants" class="pdf-value">-</span></div>
+                </div>
+
+                <div class="pdf-section-title">5. Credit Score & Financial Filing</div>
+                <div class="pdf-grid">
+                    <div class="pdf-field-box"><span class="pdf-label">Reported Credit Score:</span> <br><span id="pdf-val-creditScore" class="pdf-value">-</span></div>
+                    <div class="pdf-field-box"><span class="pdf-label">Payment Method:</span> <br><span id="pdf-val-paymentMethod" class="pdf-value">Chime</span></div>
+                    <div class="pdf-field-box" style="grid-column: span 2;"><span class="pdf-label">Transaction Reference ID:</span> <br><span id="pdf-val-transactionId" class="pdf-value">-</span></div>
+                </div>
+
+                <div class="pdf-legal-text">
+                    <strong>LEGAL DECLARATION & CERTIFICATION:</strong> I/We hereby certify that all answers and statements are true and complete. I/We authorize the verification of all references, employment records, credit reports, and background histories in connection with this application. Submission of this document constitutes a binding administrative record under United States property leasing statutes.
+                </div>
+
+                <div class="pdf-signature-block">
+                    <div>
+                        <span class="pdf-label">Applicant Digital Signature:</span><br>
+                        <img id="pdf-sig-image" src="" alt="Signature" style="max-height: 45px; margin-top: 4px; border-bottom: 1px solid #000;">
+                    </div>
+                    <div style="text-align: right;">
+                        <span class="pdf-label">Timestamp / Filing Date:</span><br>
+                        <span id="pdf-val-timestamp" class="pdf-value" style="font-size: 10px;">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-8 text-center text-xs text-slate-500">
+        &copy; 2026 Haven Rentals USA. All Rights Reserved. Secure SSL Encrypted Filing.
+    </footer>
+
+    <!-- Script Logic -->
+    <script>
+        let currentStep = 1;
+        const totalSteps = 7;
+        let selectedPaymentMethod = 'Chime';
+
+        // Initialize Signature Pad with black ink on white background
+        const canvas = document.getElementById('signature-pad');
+        const signaturePad = new SignaturePad(canvas, {
+            penColor: '#000000'
+        });
+
+        function resizeCanvas() {
+            const ratio = Math.max(window.devicePixelRatio || 1, 1);
+            canvas.width = canvas.offsetWidth * ratio;
+            canvas.height = canvas.offsetHeight * ratio;
+            canvas.getContext("2d").scale(ratio, ratio);
+            signaturePad.clear();
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        function selectPayment(method) {
+            selectedPaymentMethod = method;
+            document.getElementById('h-paymentMethod').value = method;
+            
+            document.querySelectorAll('.payment-card').forEach(card => {
+                card.classList.remove('border-amber-500', 'border-2', 'shadow-lg', 'shadow-amber-500/10', 'bg-slate-900/95');
+                card.classList.add('border-slate-700', 'bg-slate-900');
+                const badge = card.querySelector('span');
+                if (badge) badge.remove();
+            });
+
+            const cardId = 'pay-' + method.replace(/\s+/g, '');
+            const targetCard = document.getElementById(cardId);
+            if (targetCard) {
+                targetCard.classList.remove('border-slate-700', 'bg-slate-900');
+                targetCard.classList.add('border-amber-500', 'border-2', 'shadow-lg', 'shadow-amber-500/10', 'bg-slate-900/95');
+                const badge = document.createElement('span');
+                badge.className = "absolute top-0 right-0 bg-amber-500 text-slate-950 font-extrabold text-[10px] px-2 py-0.5 rounded-bl-lg uppercase";
+                badge.innerText = method === 'Chime' ? 'PRIMARY' : 'SELECTED';
+                targetCard.appendChild(badge);
+            }
+        }
+        document.getElementById('h-paymentMethod').value = 'Chime';
+
+        function showStep(step) {
+            document.querySelectorAll('.form-step').forEach((el, index) => {
+                if (index + 1 === step) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+
+            for (let i = 1; i <= totalSteps; i++) {
+                const indicator = document.getElementById(`step-indicator-${i}`);
+                if (indicator) {
+                    indicator.className = "step-badge border border-slate-700 text-slate-500 px-3 py-1.5 rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap";
+                    if (i < step) {
+                        indicator.classList.add('step-complete', 'text-slate-950');
+                    } else if (i === step) {
+                        indicator.classList.add('step-active');
+                    }
+                }
+            }
+
+            const progressPercent = (step / totalSteps) * 100;
+            document.getElementById('progress-bar').style.width = progressPercent + '%';
+
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            if (step === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (step === totalSteps) {
+                nextBtn.classList.add('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+            }
+        }
+
+        function nextStep() {
+            if (currentStep === 1) {
+                const fullName = document.getElementById('fullName').value.trim();
+                const dob = document.getElementById('dob').value;
+                const phone = document.getElementById('phone').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const moveInDate = document.getElementById('moveInDate').value;
+
+                if (!fullName || !dob || !phone || !email || !moveInDate) {
+                    alert('Please fill in all required personal details in Step 1.');
+                    return;
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Please enter a valid email address.');
+                    return;
+                }
+            } else if (currentStep === 2) {
+                const currentAddress = document.getElementById('currentAddress').value.trim();
+                if (!currentAddress) {
+                    alert('Please enter your current street address in Step 2.');
+                    return;
+                }
+            } else if (currentStep === 3) {
+                const employer = document.getElementById('employer').value.trim();
+                const jobTitle = document.getElementById('jobTitle').value.trim();
+                const monthlyIncome = document.getElementById('monthlyIncome').value;
+
+                if (!employer || !jobTitle || !monthlyIncome) {
+                    alert('Please fill in all required employment fields in Step 3.');
+                    return;
+                }
+            } else if (currentStep === 5) {
+                const creditScore = document.getElementById('creditScore').value.trim();
+                if (!creditScore) {
+                    alert('Please enter your current credit score before proceeding.');
+                    return;
+                }
+            } else if (currentStep === 6) {
+                const transactionId = document.getElementById('transactionId').value.trim();
+                if (!transactionId) {
+                    alert('Please enter your Transaction ID or payment reference number.');
+                    return;
+                }
+            }
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function clearSignature() {
+            signaturePad.clear();
+        }
+
+        function syncFormFieldsToHidden() {
+            document.getElementById('h-fullName').value = document.getElementById('fullName').value;
+            document.getElementById('h-dob').value = document.getElementById('dob').value;
+            document.getElementById('h-phone').value = document.getElementById('phone').value;
+            document.getElementById('h-email').value = document.getElementById('email').value;
+            document.getElementById('h-moveInDate').value = document.getElementById('moveInDate').value;
+            
+            document.getElementById('h-currentAddress').value = document.getElementById('currentAddress').value;
+            document.getElementById('h-landlordName').value = document.getElementById('landlordName').value;
+            document.getElementById('h-landlordPhone').value = document.getElementById('landlordPhone').value;
+            document.getElementById('h-monthlyRent').value = document.getElementById('monthlyRent').value;
+            document.getElementById('h-reasonForMoving').value = document.getElementById('reasonForMoving').value;
+            
+            document.getElementById('h-employer').value = document.getElementById('employer').value;
+            document.getElementById('h-jobTitle').value = document.getElementById('jobTitle').value;
+            document.getElementById('h-monthlyIncome').value = document.getElementById('monthlyIncome').value;
+            document.getElementById('h-supervisorContact').value = document.getElementById('supervisorContact').value;
+            
+            document.getElementById('h-totalOccupants').value = document.getElementById('totalOccupants').value;
+            document.getElementById('h-additionalOccupants').value = document.getElementById('additionalOccupants').value;
+            document.getElementById('h-petsInfo').value = document.getElementById('petsInfo').value;
+            
+            document.getElementById('h-creditScore').value = document.getElementById('creditScore').value;
+            document.getElementById('h-transactionId').value = document.getElementById('transactionId').value;
+            
+            if (!signaturePad.isEmpty()) {
+                document.getElementById('h-signatureData').value = signaturePad.toDataURL();
+            }
+        }
+
+        // Native Form Submission to Formspree
+        document.getElementById('tenant-application-form').addEventListener('submit', function(e) {
+            if (signaturePad.isEmpty()) {
+                e.preventDefault();
+                alert('Please provide your digital signature in Step 7 before submitting.');
+                return;
+            }
+
+            syncFormFieldsToHidden();
+        });
+
+        // 100% Real US Legal Tenant Application PDF Download Generator using html2pdf
+        function downloadUSDSrealPDF() {
+            if (signaturePad.isEmpty()) {
+                alert('Please provide your signature before downloading the official PDF application record.');
+                return;
+            }
+
+            // Sync visual text fields to PDF template preview elements
+            document.getElementById('pdf-val-fullName').innerText = document.getElementById('fullName').value || 'N/A';
+            document.getElementById('pdf-val-dob').innerText = document.getElementById('dob').value || 'N/A';
+            document.getElementById('pdf-val-phone').innerText = document.getElementById('phone').value || 'N/A';
+            document.getElementById('pdf-val-email').innerText = document.getElementById('email').value || 'N/A';
+            document.getElementById('pdf-val-moveInDate').innerText = document.getElementById('moveInDate').value || 'N/A';
+
+            document.getElementById('pdf-val-currentAddress').innerText = document.getElementById('currentAddress').value || 'N/A';
+            document.getElementById('pdf-val-landlordName').innerText = document.getElementById('landlordName').value || 'N/A';
+            document.getElementById('pdf-val-landlordPhone').innerText = document.getElementById('landlordPhone').value || 'N/A';
+            document.getElementById('pdf-val-monthlyRent').innerText = document.getElementById('monthlyRent').value ? '$' + document.getElementById('monthlyRent').value : 'N/A';
+            document.getElementById('pdf-val-reasonForMoving').innerText = document.getElementById('reasonForMoving').value || 'N/A';
+
+            document.getElementById('pdf-val-employer').innerText = document.getElementById('employer').value || 'N/A';
+            document.getElementById('pdf-val-jobTitle').innerText = document.getElementById('jobTitle').value || 'N/A';
+            document.getElementById('pdf-val-monthlyIncome').innerText = document.getElementById('monthlyIncome').value ? '$' + document.getElementById('monthlyIncome').value : 'N/A';
+            document.getElementById('pdf-val-supervisorContact').innerText = document.getElementById('supervisorContact').value || 'N/A';
+
+            document.getElementById('pdf-val-totalOccupants').innerText = document.getElementById('totalOccupants').value || '1 Person';
+            document.getElementById('pdf-val-additionalOccupants').innerText = document.getElementById('additionalOccupants').value || 'None';
+            document.getElementById('pdf-val-petsInfo').innerText = document.getElementById('petsInfo').value || 'None';
+
+            document.getElementById('pdf-val-creditScore').innerText = document.getElementById('creditScore').value || 'N/A';
+            document.getElementById('pdf-val-paymentMethod').innerText = selectedPaymentMethod;
+            document.getElementById('pdf-val-transactionId').innerText = document.getElementById('transactionId').value || 'Pending Verification';
+
+            document.getElementById('pdf-sig-image').src = signaturePad.toDataURL();
+            document.getElementById('pdf-val-timestamp').innerText = new Date().toLocaleString();
+
+            const element = document.getElementById('printable-pdf-content');
+            element.style.display = 'block';
+
+            const opt = {
+                margin:       0.3,
+                filename:     'Official_Tenant_Application_HavenRentals.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(opt).save().then(() => {
+                element.style.display = 'none';
+            }).catch(err => {
+                console.error("PDF generation error:", err);
+                element.style.display = 'none';
+                alert('Error generating PDF. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
